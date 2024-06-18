@@ -31,3 +31,7 @@ de plus, certains réseaux d'entreprises ayant des exigences de sécurité un pe
 
 pour la sauvegarde de la BDD, il faut encore que je me penche sur le sujet. le mieux serait soit d'avoir un sauvegarde de la BDD sur un support externe, un serveur à part, ou encore avoir un 2e serveur bitwarden délocalisé afin d'avoir une redondance. 
 _En cours de réflexion_
+
+# renouvellement du certificat
+
+voir : https://chatgpt.com/share/1a3f13d0-f890-4f5f-be06-d54b5febbcbd
