@@ -35,3 +35,62 @@ _En cours de réflexion_
 # renouvellement du certificat
 
 voir : https://chatgpt.com/share/1a3f13d0-f890-4f5f-be06-d54b5febbcbd
+
+# upgrade openssh
+
+une vulnérabilité d'openssh est sortie début juillet 2024, voici la procédure pour le mettre à jour (un apt-get install openssh-server ne suffit pas car les repo de base ne sont pas encore à jour visiblement)
+
+la vulnérabilté en question : https://www.cert.ssi.gouv.fr/alerte/CERTFR-2024-ALE-009/
+
+tout d'abord on fait une vérification de la version d'openssh : 
+```
+ssh -V
+```
+```
+julabuche@server:~ $ ssh -V
+OpenSSH_9.2p1 Debian-2+deb12u2, OpenSSL 3.0.11 19 Sep 2023
+```
+
+ensuite on fait une sauvegarde de la config actuelle d'openssh : 
+```
+sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+```
+
+ensuite, màj et install des paquets nécessaires pour la suite :
+```
+sudo apt-get update
+sudo apt-get install -y build-essential zlib1g-dev libssl-dev libpam0g-dev wget
+```
+
+on download le zip de openssh de la bonne version, on le unpack et on rentre dans le dossier
+```
+wget https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-9.8p1.tar.gz
+tar -xzf openssh-9.8p1.tar.gz
+cd openssh-9.8p1
+```
+
+ces 2 commandes sont plutôt longues à l'exécution, c'est un script pour installer openssh dans la bonne version je supposes...
+
+```
+./configure
+make
+```
+
+on installe ensuite openssh et on redémarre le service : 
+```
+sudo make install
+sudo systemctl restart sshd
+```
+
+on vérifie ensuite la version d'openssh avec la commande
+```
+ssh -V
+```
+```
+julabuche@server:~/openssh-9.8p1 $ ssh -V
+OpenSSH_9.8p1, OpenSSL 3.0.13 30 Jan 2024
+```
+
+voilà, openssh est à jour et la vulnérabilité est patchée !
+
+
