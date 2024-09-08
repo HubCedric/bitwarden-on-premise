@@ -34,7 +34,33 @@ _En cours de réflexion_
 
 # renouvellement du certificat
 
-voir : https://chatgpt.com/share/1a3f13d0-f890-4f5f-be06-d54b5febbcbd
+voir : https://chatgpt.com/share/1a3f13d0-f890-4f5f-be06-d54b5febbcbd _A rerédiger lorsque ça sera de nouveau le moment du renouvellement_
+
+# upgrade nouvelle version vaultwarden
+
+il arrive que des nouvelles versions de vaultwarden soient publiées (heureusement), voici la procédure pour les installer.
+
+commencer par stopper le conteneur vaultwarden déjà en cours d'exécution :
+
+```
+sudo docker stop vaultwarden
+```
+
+_remplacer `vaultwarden` par le nom du conteneur docker en question qui est visible en tapant la commande `sudo docker ps`_
+
+installer ensuite la dernière version du conteneur docker :
+
+```
+sudo docker pull vaultwarden/server:latest
+```
+
+une fois fini, vous pouvez relancer le conteneur docker avec la commande suivante : 
+
+```
+sudo docker run -d -e ROCKET_TLS='{certs="/ssl/certs.pem",key="/ssl/key.pem"}' -v /ssl/keys/:/ssl/ -v /vw-data/:/data/ -p 443:80 vaultwarden/server:latest
+```
+
+et voilà, vaultwarden est à jour !
 
 # upgrade openssh
 
